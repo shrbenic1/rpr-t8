@@ -1,19 +1,14 @@
 package ba.unsa.etf.rpr.tutorijal08;
 
-import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
+import javafx.scene.control.TextField;
+
 
 public class Controller {
-    private SimpleStringProperty trazenaRijec;
+    public TextField trazenaRijec;
 
-    public Controller() {
-        trazenaRijec = new SimpleStringProperty("");
+    public void trazi(ActionEvent actionEvent) {
+        System.out.println(trazenaRijec.getText());
     }
 
-    public SimpleStringProperty trazenaRijecProperty() {
-        return trazenaRijec;
-    }
-
-    public String getTrazenaRijec() {
-        return trazenaRijec.get();
-    }
 }
