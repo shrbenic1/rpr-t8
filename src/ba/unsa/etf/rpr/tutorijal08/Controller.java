@@ -5,10 +5,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.io.File;
 
@@ -73,4 +78,13 @@ public class Controller {
     public void prekini(ActionEvent actionEvent) {
         prekinuto = true;
     }
+
+    public void kliknutaLista(MouseEvent mouseEvent) throws Exception {
+        Stage secondaryStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("slanje.fxml"));
+        secondaryStage.setTitle("Slanje datoteke poštom");
+        secondaryStage.setScene(new Scene(root, 450, 320));
+        secondaryStage.show();
+    }
+
 }

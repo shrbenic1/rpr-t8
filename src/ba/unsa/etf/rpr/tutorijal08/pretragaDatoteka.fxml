@@ -12,7 +12,7 @@
       <Label layoutX="14.0" layoutY="24.0" text="Uzorak:" />
       <TextField fx:id="trazenaRijec" layoutX="69.0" layoutY="19.0" />
       <Button fx:id="trazi" layoutX="252.0" layoutY="19.0" mnemonicParsing="false" onAction="#trazi" text="Traži" />
-      <ListView fx:id="lista" layoutX="13.0" layoutY="53.0" prefHeight="255.0" prefWidth="477.0" />
+      <ListView fx:id="lista" onMouseClicked="#kliknutaLista" layoutX="13.0" layoutY="53.0" prefHeight="255.0" prefWidth="477.0" />
       <Button fx:id="prekini" layoutX="312.0" layoutY="19.0" mnemonicParsing="false" onAction="#prekini" text="Prekini" />
       <ProgressIndicator fx:id="progres" layoutX="385.0" layoutY="16.0" prefHeight="33.0" prefWidth="25.0" />
    </children>
