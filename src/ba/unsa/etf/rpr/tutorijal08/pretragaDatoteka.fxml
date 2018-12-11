@@ -12,5 +12,6 @@
       <TextField fx:id="trazenaRijec" layoutX="69.0" layoutY="19.0" />
       <Button layoutX="252.0" layoutY="19.0" mnemonicParsing="false" onAction="#trazi" text="Traži" />
       <ListView fx:id="lista" layoutX="13.0" layoutY="53.0" prefHeight="255.0" prefWidth="477.0" />
+      <Button layoutX="312.0" layoutY="19.0" mnemonicParsing="false" text="Prekini" />
    </children>
 </Pane>
