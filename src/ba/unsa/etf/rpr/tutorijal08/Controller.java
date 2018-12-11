@@ -14,6 +14,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 import java.io.File;
@@ -36,7 +37,7 @@ public class Controller {
     }
 
     public void walk(String pocetak, String rijec) {
-        if(prekinuto) {
+        if (prekinuto) {
             return;
         }
         File root = new File(pocetak);
@@ -45,12 +46,12 @@ public class Controller {
             return;
         }
         for (File f : list) {
-            if(prekinuto) return;
+            if (prekinuto) return;
             else if (f.isDirectory()) {
                 walk(f.getAbsolutePath(), rijec);
             } else {
                 if (f.getAbsoluteFile().toString().contains(rijec)) {
-                    Platform.runLater( () -> observableList.add(f.getAbsoluteFile().toString()));
+                    Platform.runLater(() -> observableList.add(f.getAbsoluteFile().toString()));
                     System.out.println("File:" + f.getAbsoluteFile());
                 }
             }
@@ -61,13 +62,13 @@ public class Controller {
         new Thread(() -> {
             trazi.setDisable(true);
             prekini.setDisable(false);
-            if(!prekinuto) {
+            if (!prekinuto) {
                 progres.setVisible(true);
-                if(!lista.getItems().isEmpty()) {
-                    Platform.runLater( () -> lista.getItems().clear());
+                if (!lista.getItems().isEmpty()) {
+                    Platform.runLater(() -> lista.getItems().clear());
                 }
                 walk(System.getProperty("user.home"), trazenaRijec.getText());
-                Platform.runLater( () -> lista.setItems(observableList));
+                Platform.runLater(() -> lista.setItems(observableList));
             }
             progres.setVisible(false);
             prekinuto = false;
