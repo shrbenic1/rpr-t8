@@ -83,7 +83,7 @@ public class Controller {
         Stage secondaryStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("slanje.fxml"));
         secondaryStage.setTitle("Slanje datoteke poštom");
-        secondaryStage.setScene(new Scene(root, 450, 320));
+        secondaryStage.setScene(new Scene(root, 500, 320));
         secondaryStage.show();
     }
 
