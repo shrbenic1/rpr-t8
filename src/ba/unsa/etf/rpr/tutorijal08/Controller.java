@@ -14,6 +14,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 import java.io.File;
 
@@ -83,7 +84,7 @@ public class Controller {
         Stage secondaryStage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("slanje.fxml"));
         secondaryStage.setTitle("Slanje datoteke poštom");
-        secondaryStage.setScene(new Scene(root, 500, 320));
+        secondaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         secondaryStage.show();
     }
 
