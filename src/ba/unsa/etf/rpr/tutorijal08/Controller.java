@@ -1,7 +1,10 @@
 package ba.unsa.etf.rpr.tutorijal08;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -11,9 +14,9 @@ import java.io.File;
 public class Controller {
     public TextField trazenaRijec;
     public ListView<String> lista;
-    private ObservableList<String> observableList = FXCollections.observableArrayList();
+    private ObservableList<String> observableList = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
 
-    public void walk (String pocetak, String rijec){
+    public void walk(String pocetak, String rijec) {
         File root = new File(pocetak);
         File[] list = root.listFiles();
         if (list == null) {
@@ -23,9 +26,8 @@ public class Controller {
             if (f.isDirectory()) {
                 walk(f.getAbsolutePath(), rijec);
             } else {
-                if(f.getAbsoluteFile().toString().contains(rijec)) {
+                if (f.getAbsoluteFile().toString().contains(rijec)) {
                     observableList.add(f.getAbsoluteFile().toString());
-                    lista.setItems(observableList);
                     System.out.println("File:" + f.getAbsoluteFile());
                 }
             }
@@ -33,6 +35,12 @@ public class Controller {
     }
 
     public void trazi(ActionEvent actionEvent) {
-        walk("C:\\Users", trazenaRijec.getText());
+        new Thread(() -> {
+            if (!lista.getItems().isEmpty()) {
+                lista.getItems().clear();
+            }
+            walk("C:\\Users", trazenaRijec.getText());
+            lista.setItems(observableList);
+        }).start();
     }
 }
