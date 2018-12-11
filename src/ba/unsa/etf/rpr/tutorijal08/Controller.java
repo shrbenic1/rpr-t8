@@ -3,8 +3,6 @@ package ba.unsa.etf.rpr.tutorijal08;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -27,8 +25,9 @@ public class Controller {
                 walk(f.getAbsolutePath(), rijec);
             } else {
                 if (f.getAbsoluteFile().toString().contains(rijec)) {
-                    observableList.add(f.getAbsoluteFile().toString());
+                    Platform.runLater( () -> observableList.add(f.getAbsoluteFile().toString()));
                     System.out.println("File:" + f.getAbsoluteFile());
+
                 }
             }
         }
@@ -36,11 +35,11 @@ public class Controller {
 
     public void trazi(ActionEvent actionEvent) {
         new Thread(() -> {
-            if (!lista.getItems().isEmpty()) {
-                lista.getItems().clear();
+            if(!lista.getItems().isEmpty()) {
+                Platform.runLater( () -> lista.getItems().clear());
             }
             walk("C:\\Users", trazenaRijec.getText());
-            lista.setItems(observableList);
+            Platform.runLater( () -> lista.setItems(observableList));
         }).start();
     }
 }
