@@ -12,7 +12,7 @@
       <Label layoutX="93.0" layoutY="192.0" text="Poštanski broj:" />
       <TextField layoutX="187.0" layoutY="108.0" />
       <TextField layoutX="187.0" layoutY="147.0" />
-      <TextField layoutX="187.0" layoutY="188.0" />
+      <TextField fx:id = "postanskiBroj" layoutX="187.0" layoutY="188.0" />
       <TextField layoutX="187.0" layoutY="74.0" />
    </children>
 </Pane>
