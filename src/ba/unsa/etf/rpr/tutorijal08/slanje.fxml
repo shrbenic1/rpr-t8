@@ -4,13 +4,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="185.0" layoutY="79.0" text="Label" />
-      <Label layoutX="185.0" layoutY="113.0" text="Label" />
-      <Label layoutX="185.0" layoutY="152.0" text="Label" />
-      <Label layoutX="185.0" layoutY="192.0" text="Label" />
+      <Label layoutX="185.0" layoutY="79.0" text="Ime i prezime:" />
+      <Label layoutX="185.0" layoutY="113.0" text="Adresa:" />
+      <Label layoutX="185.0" layoutY="152.0" text="Grad:" />
+      <Label layoutX="185.0" layoutY="192.0" text="Poštanski broj:" />
       <TextField layoutX="265.0" layoutY="108.0" />
       <TextField layoutX="265.0" layoutY="147.0" />
       <TextField layoutX="265.0" layoutY="187.0" />
