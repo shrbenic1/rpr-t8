@@ -27,7 +27,6 @@ public class Controller {
                 if (f.getAbsoluteFile().toString().contains(rijec)) {
                     Platform.runLater( () -> observableList.add(f.getAbsoluteFile().toString()));
                     System.out.println("File:" + f.getAbsoluteFile());
-
                 }
             }
         }
@@ -38,7 +37,7 @@ public class Controller {
             if(!lista.getItems().isEmpty()) {
                 Platform.runLater( () -> lista.getItems().clear());
             }
-            walk("C:\\Users", trazenaRijec.getText());
+            walk(System.getProperty("user.home"), trazenaRijec.getText());
             Platform.runLater( () -> lista.setItems(observableList));
         }).start();
     }
