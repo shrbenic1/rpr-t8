@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.tutorijal08;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -20,27 +21,20 @@ import java.nio.charset.StandardCharsets;
 public class SlanjeController {
     public TextField postanskiBroj;
 
-    private boolean validanPostanskiBroj(String n) {
-        try {
-            URL url = new URL("http://c9.etf.unsa.ba/proba/postanskiBroj.php?postanskiBroj=" + n);
-            BufferedReader ulaz = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
-            String json = "";
-            String line = null;
-            while((line = ulaz.readLine()) != null) {
-                json = json + line;
-            }
-            ulaz.close();
-            if(json.equals("OK")) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            //
+    private boolean validanPostanskiBroj(String n) throws Exception {
+        URL url = new URL("http://c9.etf.unsa.ba/proba/postanskiBroj.php?postanskiBroj=" + n);
+        BufferedReader ulaz = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
+        String json = "";
+        String line = null;
+        while ((line = ulaz.readLine()) != null) {
+            json = json + line;
         }
-        return false;
+        ulaz.close();
+        if (json.equals("OK")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @FXML
@@ -48,26 +42,24 @@ public class SlanjeController {
         postanskiBroj.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> obs, Boolean o, Boolean n) {
-                GraphicValidationDecoration graphicValidationDecoration = new GraphicValidationDecoration();
-                if (!n && !validanPostanskiBroj(postanskiBroj.getCharacters().toString())) {
-                    graphicValidationDecoration.applyValidationDecoration(new ValidationMessage() {
-                        @Override
-                        public String getText() {
-                            return "Neispravan poštanski broj!";
+                if (!n) {
+                    new Thread(() -> {
+                        try {
+                            if (validanPostanskiBroj(postanskiBroj.getCharacters().toString())) {
+                                System.out.println("OK");
+                                postanskiBroj.getStyleClass().removeAll("poljeNijeIspravno");
+                                postanskiBroj.getStyleClass().add("poljeIspravno");
+                            } else {
+                                System.out.println("NOT OK");
+                                postanskiBroj.getStyleClass().removeAll("poljeIspravno");
+                                postanskiBroj.getStyleClass().add("poljeNijeIspravno");
+                            }
+                        } catch (Exception e) {
+                            //
                         }
-                        @Override
-                        public Severity getSeverity() {
-                        return Severity.ERROR;
-                    }
-                        @Override
-                        public Control getTarget() {
-                        return postanskiBroj;
-                    }
-                });
-            } else {
-                graphicValidationDecoration.removeDecorations(postanskiBroj);
+                    }).start();
+                }
             }
-        }
-    });
+        });
     }
 }
