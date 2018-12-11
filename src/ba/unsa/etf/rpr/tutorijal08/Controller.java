@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -15,16 +16,27 @@ public class Controller {
     public ListView<String> lista;
     private ObservableList<String> observableList = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
     public Button trazi;
+    public Button prekini;
+    private boolean prekinuto = false;
 
+
+    @FXML
+    void initialize() {
+        prekini.setDisable(true);
+    }
 
     public void walk(String pocetak, String rijec) {
+        if(prekinuto) {
+            return;
+        }
         File root = new File(pocetak);
         File[] list = root.listFiles();
         if (list == null) {
             return;
         }
         for (File f : list) {
-            if (f.isDirectory()) {
+            if(prekinuto) return;
+            else if (f.isDirectory()) {
                 walk(f.getAbsolutePath(), rijec);
             } else {
                 if (f.getAbsoluteFile().toString().contains(rijec)) {
@@ -38,12 +50,21 @@ public class Controller {
     public void trazi(ActionEvent actionEvent) {
         new Thread(() -> {
             trazi.setDisable(true);
-            if(!lista.getItems().isEmpty()) {
-                Platform.runLater( () -> lista.getItems().clear());
+            prekini.setDisable(false);
+            if(!prekinuto) {
+                if(!lista.getItems().isEmpty()) {
+                    Platform.runLater( () -> lista.getItems().clear());
+                }
+                walk(System.getProperty("user.home"), trazenaRijec.getText());
+                Platform.runLater( () -> lista.setItems(observableList));
             }
-            walk(System.getProperty("user.home"), trazenaRijec.getText());
-            Platform.runLater( () -> lista.setItems(observableList));
+            prekinuto = false;
             trazi.setDisable(false);
+            prekini.setDisable(true);
         }).start();
+    }
+
+    public void prekini(ActionEvent actionEvent) {
+        prekinuto = true;
     }
 }
