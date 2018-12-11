@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 
 import java.io.File;
@@ -18,11 +19,14 @@ public class Controller {
     public Button trazi;
     public Button prekini;
     private boolean prekinuto = false;
+    @FXML
+    private ProgressIndicator progres = new ProgressIndicator(0);
 
 
     @FXML
     void initialize() {
         prekini.setDisable(true);
+        progres.setVisible(false);
     }
 
     public void walk(String pocetak, String rijec) {
@@ -52,12 +56,14 @@ public class Controller {
             trazi.setDisable(true);
             prekini.setDisable(false);
             if(!prekinuto) {
+                progres.setVisible(true);
                 if(!lista.getItems().isEmpty()) {
                     Platform.runLater( () -> lista.getItems().clear());
                 }
                 walk(System.getProperty("user.home"), trazenaRijec.getText());
                 Platform.runLater( () -> lista.setItems(observableList));
             }
+            progres.setVisible(false);
             prekinuto = false;
             trazi.setDisable(false);
             prekini.setDisable(true);
